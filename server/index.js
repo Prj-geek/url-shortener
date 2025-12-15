@@ -55,9 +55,11 @@ app.post('/shorten', async (req, res) => {
 
   await newUrl.save();
 
+  const baseUrl = process.env.BASE_URL || `http://localhost:${PORT}`;
+
   res.json({
     shortId: id,
-    shortUrl: `http://localhost:3000/${id}`
+    shortUrl: `${baseUrl}/${id}`
   });
 });
 
