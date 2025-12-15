@@ -1,11 +1,20 @@
 require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
+
+// ✅ CORS must be BEFORE routes
+app.use(cors({
+  origin: '*',   // allow all origins (safe for this project)
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+}));
+
+
 app.use(express.json());
-app.use(cors());
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
