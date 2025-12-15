@@ -6,14 +6,9 @@ const cors = require('cors');
 
 const app = express();
 
-// ✅ CORS must be BEFORE routes
-app.use(cors({
-  origin: '*',   // allow all origins (safe for this project)
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type']
-}));
-
-
+// ✅ Explicitly handle ALL CORS + preflight
+app.use(cors());
+app.options('*', cors()); // 👈 THIS IS THE KEY LINE
 app.use(express.json());
 
 // Connect to MongoDB
