@@ -33,3 +33,7 @@ A simple full-stack URL shortener built using Node.js, Express, MongoDB, and van
 
 ## Notes
 This project was built to learn full-stack fundamentals including REST APIs, databases, and frontend–backend integration.
+
+## Live Demo
+- Frontend: https://genuine-kleicha-0a2098.netlify.app/
+- Backend API: https://url-shortener-api-5hfn.onrender.com
