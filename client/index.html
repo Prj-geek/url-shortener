@@ -34,6 +34,17 @@
 <body>
 
   <div class="card">
+
+    <h2>Create Short URL</h2>
+
+    <input id="longUrl" placeholder="Enter long URL" />
+    <button onclick="createShortUrl()">Shorten</button>
+
+    <div id="shortResult" class="result" style="display:none;"></div>
+
+    <hr style="margin:20px 0;" />
+
+    
     <h2>URL Stats</h2>
 
     <input id="shortId" placeholder="Enter short ID (e.g. abc123)" />
@@ -72,6 +83,45 @@
         resultDiv.style.display = "block";
         resultDiv.innerHTML = "Error connecting to server";
       }
+    }
+  </script>
+
+  <script>
+    async function createShortUrl() {
+        const longUrl = document.getElementById("longUrl").value;
+        const resultDiv = document.getElementById("shortResult");
+
+        if (!longUrl) {
+        alert("Please enter a URL");
+        return;
+        }
+
+        try {
+        const res = await fetch("https://url-shortener-api.onrender.com/shorten", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ url: longUrl })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            resultDiv.style.display = "block";
+            resultDiv.innerText = "Error creating short URL";
+            return;
+        }
+
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = `
+            <strong>Short URL:</strong><br>
+            <a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>
+        `;
+        } catch (err) {
+        resultDiv.style.display = "block";
+        resultDiv.innerText = "Server error";
+        }
     }
   </script>
 
