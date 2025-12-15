@@ -37,3 +37,6 @@ This project was built to learn full-stack fundamentals including REST APIs, dat
 ## Live Demo
 - Frontend: https://genuine-kleicha-0a2098.netlify.app/
 - Backend API: https://url-shortener-api-5hfn.onrender.com
+
+### Note
+Short URLs are generated dynamically based on deployment environment.
