@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>URL Shortener Stats</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 40px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    .result {
+      margin-top: 20px;
+      background: #eee;
+      padding: 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>URL Stats</h2>
+
+    <input id="shortId" placeholder="Enter short ID (e.g. abc123)" />
+    <button onclick="getStats()">Get Stats</button>
+
+    <div id="result" class="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    async function getStats() {
+      const shortId = document.getElementById("shortId").value;
+      const resultDiv = document.getElementById("result");
+
+      if (!shortId) {
+        alert("Please enter a short ID");
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:3000/stats/${shortId}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          resultDiv.style.display = "block";
+          resultDiv.innerHTML = "Short URL not found";
+          return;
+        }
+
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = `
+          <strong>Original URL:</strong><br>${data.originalUrl}<br><br>
+          <strong>Clicks:</strong> ${data.clicks}<br>
+          <strong>Created At:</strong><br>${new Date(data.createdAt).toLocaleString()}
+        `;
+      } catch (err) {
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = "Error connecting to server";
+      }
+    }
+  </script>
+
+</body>
+</html>
